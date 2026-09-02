@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Response
 import models
 from database import engine, SessionLocal
 from typing import Annotated,Optional
@@ -43,7 +43,7 @@ def read(db: db_dependency, user: user_dependency):
     return todos
 
 @app.get("/todo/{todo_id}")
-def read_todos(db: db_dependency, todo_id: int, user: user_dependency):  
+def read_specific_todo(db: db_dependency, todo_id: int, user: user_dependency):  
     specific_todo = db.query(models.Todo).filter(models.Todo.owner_id==user["id"]).filter(models.Todo.id == todo_id).first()
     if not specific_todo:
         raise HTTPException(status_code=404, detail="Todo not found")
@@ -67,10 +67,7 @@ def create_todo(db: db_dependency, todo: Todos, user: user_dependency):
     db.add(todo_model)
     db.commit()
 
-    return {
-        "status": 201,
-        "transaction": "Successful"
-    }
+    return Response(status_code=201, content="new todo created successfully")
 
 
 @app.put("/edit_todo/{todo_id}")
@@ -106,10 +103,7 @@ def delete_todos(db: db_dependency, todo_id: int,user: user_dependency):
     db.delete(todos)
     db.commit()
 
-    return {
-        "status": 200,
-        "transaction": "Successful"
-    }
+    return Response(status_code=200, content="Todo deleted successfully")
 
 @app.get("/user")
 def get_user(db: db_dependency, user: user_dependency):
