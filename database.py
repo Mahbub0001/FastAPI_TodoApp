@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # SQLALCHEMY_DATABASE_URL = 'sqlite:///./todosapp.db' -- for sqlite
 #SQLALCHEMY_DATABASE_URL='postgresql://postgres:54wx9vdn@localhost/TodoApplicationDatabase'
-SQLALCHEMY_DATABASE_URL = 'sqlite:///./todosapp.db'
+SQLALCHEMY_DATABASE_URL = 'postgresql://postgres.ngtyysbsfvowtbrqamti:OI4Pc6zAg9xG9HLq@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres'
 
 # engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}) -- for sqlite
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
